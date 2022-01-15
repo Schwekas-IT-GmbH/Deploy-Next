@@ -1,30 +1,38 @@
 variables:
+    # Directus Settings - NOTE: Set Stage and Prod Credentials and most other
+    # Variables you see in here in the Projects CI Settings on GitLab!
+    BACKEND_KEY: "" # This is the Directus API Key
+    BACKEND_SECRET: "" # This is the Directus API Secret
+    ADMIN_EMAIL: "" # This is the Directus Admin Email
+    ADMIN_PASSWORD: "" # This is the Directus Admin Password
+
     # Staging Settings
     STAGE_SERVER: "" # This is the Runner Tag this Job should run on
     STAGE_DOMAIN: "" # This is the Domain that NGINX should be configured to
     STAGE_SQL_ROOT_PW: "" # This is the root password for the SQL Server
     STAGE_SQL_APP_PW: "" # This is the password for the SQL Server App user
+    STAGE_API_DOMAIN: api.${STAGE_DOMAIN} # This is the API Domain that should be used for Directus
+    STAGE_BACKEND_KEY: ${BACKEND_KEY} # This is the Directus API Key
+    STAGE_BACKEND_SECRET: ${BACKEND_SECRET} # This is the Directus API Secret
+    STAGE_ADMIN_EMAIL: ${ADMIN_EMAIL} # This is the Directus Admin Email
+    STAGE_ADMIN_PASSWORD: ${ADMIN_PASSWORD} # This is the Directus Admin Password
 
     # Production Settings
     PROD_SERVER: "" # This is the Runner Tag this Job should run on
     PROD_DOMAIN: "" # This is the Domain that NGINX should be configured to
     PROD_SQL_ROOT_PW: "" # This is the root password for the SQL Server
     PROD_SQL_APP_PW: "" # This is the password for the SQL Server App user
+    PROD_API_DOMAIN: api.${PROD_DOMAIN} # This is the API Domain that should be used for Directus
+    PROD_BACKEND_KEY: ${BACKEND_KEY} # This is the Directus API Key
+    PROD_BACKEND_SECRET: ${BACKEND_SECRET} # This is the Directus API Secret
+    PROD_ADMIN_EMAIL: ${ADMIN_EMAIL} # This is the Directus Admin Email
+    PROD_ADMIN_PASSWORD: ${ADMIN_PASSWORD} # This is the Directus Admin Password
 
-    # Directus Settings
-    BACKEND_KEY: "" # This is the Directus API Key
-    BACKEND_SECRET: "" # This is the Directus API Secret
-    ADMIN_EMAIL: "" # This is the Directus Admin Email
-    ADMIN_PASSWORD: "" # This is the Directus Admin Password
-
-    # Defaults
-    STAGE_API_DOMAIN: api.${STAGE_DOMAIN}
-    PROD_API_DOMAIN: api.${PROD_DOMAIN}
-
+# Stages that run
 stages:
-    - test
-    - staging
-    - deploy
+    - test # This will run every time, even when pushing to development
+    - staging # This will deploy to staging
+    - production # This will deploy to production
 
 # Cache Node Modules
 cache:
@@ -66,9 +74,9 @@ staging:
         - staging
 
 # Run Deployment
-deploy:
+production:
     image: docker:dind
-    stage: deploy
+    stage: production
     script:
         - docker-compose -f docker-compose.prod.yml up -d --build --remove-orphans
     tags:

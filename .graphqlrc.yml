@@ -1,4 +1,3 @@
 schema:
-  - "https://api.beta-ktool.schwekas.de/graphql?access_token=admin"
-  - "https://api.beta-ktool.schwekas.de/graphql/system?access_token=admin"
+  - "YOUR_ENDPOINT_URL"
 documents: "**/*.{graphql,gql,js,ts,jsx,tsx}"
