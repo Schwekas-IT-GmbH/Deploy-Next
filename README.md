@@ -6,7 +6,9 @@ This project aims to automate the repetitive task of creating a new project and 
 
 
 ## Install the NextJS Client for this Project
-
+```shell
+yarn create next-app -e https://github.com/Schwekas-IT-GmbH/Deploy-Next
+```
 
 
 
