@@ -1,0 +1,16 @@
+# Node Image
+FROM node:lts-alpine
+
+# Set app working dir
+WORKDIR /app
+
+# Copy Package
+COPY package*.json ./
+
+# Install Dep
+RUN yarn install
+
+# RUN COMMANDS
+EXPOSE 3000
+ENTRYPOINT ["npm"]
+CMD ["run","dev"]

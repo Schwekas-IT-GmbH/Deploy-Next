@@ -1,0 +1,10 @@
+version: "3.4"
+services:
+  dev_frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+    ports:
+      - 80:3000

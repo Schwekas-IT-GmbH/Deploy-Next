@@ -1,0 +1,16 @@
+{
+	"extends": [
+		"next/core-web-vitals",
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"rules": {
+		"@next/next/no-img-element": "off",
+		"react/react-in-jsx-scope": "off"
+	},
+	"globals": {
+		"React": true,
+		"JSX": true
+	}
+}

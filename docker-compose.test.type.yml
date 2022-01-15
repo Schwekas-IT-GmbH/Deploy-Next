@@ -1,0 +1,14 @@
+version: "3.4"
+
+networks:
+  test_type:
+    external: false
+
+services:
+  test_type:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    command: yarn run build
+    networks:
+      - test_type

@@ -1,0 +1,81 @@
+variables:
+    # Staging Settings
+    STAGE_SERVER: "" # This is the Runner Tag this Job should run on
+    STAGE_DOMAIN: "" # This is the Domain that NGINX should be configured to
+    STAGE_SQL_ROOT_PW: "" # This is the root password for the SQL Server
+    STAGE_SQL_APP_PW: "" # This is the password for the SQL Server App user
+
+    # Production Settings
+    PROD_SERVER: "" # This is the Runner Tag this Job should run on
+    PROD_DOMAIN: "" # This is the Domain that NGINX should be configured to
+    PROD_SQL_ROOT_PW: "" # This is the root password for the SQL Server
+    PROD_SQL_APP_PW: "" # This is the password for the SQL Server App user
+
+    # Directus Settings
+    BACKEND_KEY: "" # This is the Directus API Key
+    BACKEND_SECRET: "" # This is the Directus API Secret
+    ADMIN_EMAIL: "" # This is the Directus Admin Email
+    ADMIN_PASSWORD: "" # This is the Directus Admin Password
+
+    # Defaults
+    STAGE_API_DOMAIN: api.${STAGE_DOMAIN}
+    PROD_API_DOMAIN: api.${PROD_DOMAIN}
+
+stages:
+    - test
+    - staging
+    - deploy
+
+# Cache Node Modules
+cache:
+    paths:
+        - node_modules/
+
+# Run Linter
+test_lint:
+    image: docker:dind
+    stage: test
+    script:
+        - docker-compose -f docker-compose.test.lint.yml up --exit-code-from test_lint --build --remove-orphans
+    tags:
+        - test
+    interruptible: true
+
+# Run Build
+test_type:
+    image: docker:dind
+    stage: test
+    script:
+        - docker-compose -f docker-compose.test.type.yml up --exit-code-from test_type --build --remove-orphans
+    tags:
+        - test
+    interruptible: true
+
+# Run Staging
+staging:
+    image: docker:dind
+    stage: staging
+    script:
+        - docker-compose -f docker-compose.stage.yml up -d --build --remove-orphans
+    tags:
+        - $STAGE_SERVER
+    environment:
+        name: staging
+        url: https://${STAGE_DOMAIN}
+    only:
+        - staging
+
+# Run Deployment
+deploy:
+    image: docker:dind
+    stage: deploy
+    script:
+        - docker-compose -f docker-compose.prod.yml up -d --build --remove-orphans
+    tags:
+        - $PROD_SERVER
+    environment:
+        name: production
+        url: https://${PROD_DOMAIN}
+    only:
+        - production
+    when: manual

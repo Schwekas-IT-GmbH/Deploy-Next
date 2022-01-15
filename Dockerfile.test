@@ -1,0 +1,14 @@
+# Node Image
+FROM node:lts-alpine
+
+# Set app working dir
+WORKDIR /app
+
+# Copy Package
+COPY package*.json ./
+
+# Install Dep
+RUN yarn install
+
+# Copy Files from GIT into Container
+COPY . .

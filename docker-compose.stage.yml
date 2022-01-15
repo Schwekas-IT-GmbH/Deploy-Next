@@ -1,0 +1,74 @@
+version: "3.4"
+
+networks:
+  nginx-proxy:
+    external: true
+  internal:
+    external: false
+
+volumes:
+  directus:
+    name: ${CI_PROJECT_ROOT_NAMESPACE}_${CI_PROJECT_NAME}_directus
+  mysql:
+    name: ${CI_PROJECT_ROOT_NAMESPACE}_${CI_PROJECT_NAME}_mysql
+
+services:
+  stage_frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - API_DOMAIN: ${STAGE_API_DOMAIN}
+    expose:
+      - 3000
+    environment:
+      VIRTUAL_HOST: ${STAGE_DOMAIN}
+      LETSENCRYPT_HOST: ${STAGE_DOMAIN}
+    restart: unless-stopped
+    networks:
+      - nginx-proxy
+
+  stage_backend:
+    image: directus/directus:latest
+    volumes:
+      - directus:/directus/uploads
+    environment:
+      KEY: ${BACKEND_KEY}
+      SECRET: ${BACKEND_SECRET}
+      DB_CLIENT: mysql
+      DB_HOST: stage_database
+      DB_PORT: 3306
+      DB_DATABASE: application
+      DB_USER: application
+      DB_PASSWORD: ${STAGE_SQL_APP_PW}
+      CACHE_ENABLED: "false"
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      PUBLIC_URL: https://${STAGE_API_DOMAIN}
+      VIRTUAL_HOST: ${STAGE_API_DOMAIN}
+      VIRTUAL_PORT: 8055
+      LETSENCRYPT_HOST: ${STAGE_API_DOMAIN}
+    expose:
+      - 8055
+    depends_on:
+      - stage_database
+    restart: unless-stopped
+    networks:
+      - nginx-proxy
+      - internal
+
+  stage_database:
+    image: mysql
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${STAGE_SQL_ROOT_PW}
+      MYSQL_DATABASE: application
+      MYSQL_USER: application
+      MYSQL_PASSWORD: ${STAGE_SQL_APP_PW}
+    security_opt:
+      - seccomp:unconfined
+    restart: unless-stopped
+    networks:
+      - internal

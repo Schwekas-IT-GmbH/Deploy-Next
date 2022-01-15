@@ -1,0 +1,58 @@
+{
+	"Import Query": {
+		"prefix": "::importQuery",
+		"description": "Import A Query From Query Folder",
+		"body": [
+			"import ${1:queryName}_ from '../queries/${2:queryName}.gql';",
+			"import ${1:queryName} from '../queries/__generated__/${2:queryName}';"
+		]
+	},
+	"NextJS Page": {
+		"prefix": "::page",
+		"description": "Create A NextJS Page",
+		"body": [
+			"import { NextPage } from \"next\";",
+			"",
+			"export const ${TM_FILENAME_BASE}Page: NextPage = () =>",
+			"{",
+			"\treturn (<></>);",
+			"}"
+		]
+	},
+	"Functional Component": {
+		"prefix": "::component",
+		"description": "Create A Functional Component",
+		"body": [
+			"",
+			"interface ${TM_FILENAME_BASE}Props",
+			"{",
+			"}",
+			"",
+			"export const ${TM_FILENAME_BASE}: React.FC<${TM_FILENAME_BASE}Props> = (p) =>",
+			"{",
+			"\treturn (<>{p.children}</>);",
+			"};"
+		]
+	},
+	"Use State (Default: Null)": {
+		"prefix": "::state_null",
+		"description": "Create A Use State Hook with default null",
+		"body": [
+			"const [$1,Set$1] = useState<$2|null>(null);",
+		]
+	},
+	"Use State (Default: Variable)": {
+		"prefix": "::state",
+		"description": "Create A Use State Hook with default null",
+		"body": [
+			"const [$1,Set$1] = useState<$2>($3);",
+		]
+	},
+	"Use Effect": {
+		"prefix": "::effect",
+		"description": "Create A Use Effect Hook",
+		"body": [
+			"useEffect(() => { $1 }, []);",
+		]
+	},
+}

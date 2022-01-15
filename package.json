@@ -1,0 +1,40 @@
+{
+	"private": true,
+	"author": {
+		"name": "Schwekas IT GmbH",
+		"email": "info@schwekas.com",
+		"url": "https://schwekas.com"
+	},
+	"scripts": {
+		"dev": "next",
+		"build": "next build",
+		"start": "next start",
+		"type-check": "tsc",
+		"type": "find -type d -name __generated__ -exec rm -rf {} + && apollo client:codegen --target typescript --endpoint=https://api.beta-ktool.schwekas.de/graphql?access_token=admin --endpoint=https://api.beta-ktool.schwekas.de/graphql/system?access_token=admin --includes=**/*.gql --watch"
+	},
+	"dependencies": {
+		"next": "latest",
+		"react": "latest",
+		"react-dom": "latest",
+		"graphql": "latest",
+		"@headlessui/react": "latest",
+		"@apollo/client": "latest",
+		"@apollo/react-hooks": "latest",
+		"react-hook-form": "latest"
+	},
+	"devDependencies": {
+		"@types/node": "latest",
+		"@types/react": "latest",
+		"@types/react-dom": "latest",
+		"typescript": "latest",
+		"tailwindcss": "latest",
+		"autoprefixer":"latest",
+		"@tailwindcss/forms": "latest",
+		"@tailwindcss/typography": "latest",
+		"eslint": "latest",
+    	"eslint-config-next": "latest",
+		"@typescript-eslint/eslint-plugin":"latest",
+		"apollo":"latest"
+	},
+	"version": "1.0.0"
+}

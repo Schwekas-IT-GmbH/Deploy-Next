@@ -1,0 +1,12 @@
+{
+	"cSpell.enableFiletypes": [
+		"plaintext"
+	],
+	"typescript.tsdk": "frontend\\node_modules\\typescript\\lib",
+	"favorites.resources": [
+		{
+			"filePath": "",
+			"group": "Default"
+		}
+	]
+}

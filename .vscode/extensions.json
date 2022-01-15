@@ -1,0 +1,24 @@
+{
+    "recommendations": [
+		"ms-azuretools.vscode-docker",
+		"dbaeumer.vscode-eslint",
+		"bpruitt-goddard.mermaid-markdown-syntax-highlighting",
+		"vstirbu.vscode-mermaid-preview",
+		"christian-kohler.path-intellisense",
+		"tabnine.tabnine-vscode",
+		"albert.tabout",
+		"bradlc.vscode-tailwindcss",
+		"austenc.tailwind-docs",
+		"rangav.vscode-thunder-client",
+		"shardulm94.trailing-spaces",
+		"ms-vscode-remote.remote-wsl",
+		"graphql.vscode-graphql",
+		"exodiusstudios.comment-anchors",
+		"howardzuo.vscode-favorites",
+		"mhutchie.git-graph",
+		"github.copilot",
+		"eamodio.gitlens",
+		"wix.glean",
+		"mariusalchimavicius.json-to-ts"
+	]
+}

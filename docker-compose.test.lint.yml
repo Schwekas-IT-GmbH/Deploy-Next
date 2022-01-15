@@ -1,0 +1,14 @@
+version: "3.4"
+
+networks:
+  test_lint:
+    external: false
+
+services:
+  test_lint:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    command: yarn run lint
+    networks:
+      - test_lint
