@@ -10,7 +10,7 @@
 		"build": "next build",
 		"start": "next start",
 		"type-check": "tsc",
-		"type": "find -type d -name __generated__ -exec rm -rf {} + && apollo client:codegen --target typescript --endpoint=https://api.beta-ktool.schwekas.de/graphql?access_token=admin --endpoint=https://api.beta-ktool.schwekas.de/graphql/system?access_token=admin --includes=**/*.gql --watch"
+		"type": "find -type d -name __generated__ -exec rm -rf {} + && apollo client:codegen --target typescript --endpoint=YOUR_ENDPOINT --includes=**/*.gql --watch"
 	},
 	"dependencies": {
 		"next": "latest",
