@@ -20,8 +20,11 @@
 		"jsx": "preserve",
 		"baseUrl": ".",
 		"paths": {
-			"@module/*": [
-				"./modules/*"
+			"@modules/*": [
+				"./@modules/*"
+			],
+			"@styles/*": [
+				"./@styles/*"
 			],
 		},
 	},
