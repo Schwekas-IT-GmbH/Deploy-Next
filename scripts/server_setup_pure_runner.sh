@@ -1,19 +1,19 @@
 #!/bin/bash
 
-echo -e "\e[92mJamStrapper: Running \e[1m\e[33mAPT UPDATE\e[92m\e[0m..."
+echo -e "\e[92mDeploy-Next: Running \e[1m\e[33mAPT UPDATE\e[92m\e[0m..."
 apt update
 
-echo -e "\e[92mJamStrapper: Running \e[1m\e[33mAPT UPGRADE\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Running \e[1m\e[33mAPT UPGRADE\e[92m\e[0m...\e[39m"
 apt upgrade -y
 
-echo -e "\e[92mJamStrapper: Installing \e[1m\e[33mUtilities\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Installing \e[1m\e[33mUtilities\e[92m\e[0m...\e[39m"
 apt install apt-transport-https ca-certificates curl gnupg lsb-release -y
 sleep 5
 
-echo -e "\e[92mJamStrapper: Adding \e[1m\e[33mGitLab Runner\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Adding \e[1m\e[33mGitLab Runner\e[92m\e[0m...\e[39m"
 curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | bash
 
-echo -e "\e[92mJamStrapper: Pinning \e[1m\e[33mGitLab Runner\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Pinning \e[1m\e[33mGitLab Runner\e[92m\e[0m...\e[39m"
 cat <<EOF | tee /etc/apt/preferences.d/pin-gitlab-runner.pref
 Explanation: Prefer GitLab provided packages over the Debian native ones
 Package: gitlab-runner
@@ -21,28 +21,28 @@ Pin: origin packages.gitlab.com
 Pin-Priority: 1001
 EOF
 
-echo -e "\e[92mJamStrapper: Running \e[1m\e[33mAPT UPDATE\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Running \e[1m\e[33mAPT UPDATE\e[92m\e[0m...\e[39m"
 apt update
 
-echo -e "\e[92mJamStrapper: Installing \e[1m\e[33mGitLab Runner\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Installing \e[1m\e[33mGitLab Runner\e[92m\e[0m...\e[39m"
 apt install gitlab-runner -y
-echo -e "\e[92mJamStrapper: Done!"
+echo -e "\e[92mDeploy-Next: Done!"
 sleep 5
 
 
 
-echo -e "\e[92mJamStrapper: Adding \e[1m\e[33mDocker\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Adding \e[1m\e[33mDocker\e[92m\e[0m...\e[39m"
 curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 
-echo -e "\e[92mJamStrapper: Running \e[1m\e[33mAPT UPDATE\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Running \e[1m\e[33mAPT UPDATE\e[92m\e[0m...\e[39m"
 apt update
 
-echo -e "\e[92mJamStrapper: Installing \e[1m\e[33mDocker\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Installing \e[1m\e[33mDocker\e[92m\e[0m...\e[39m"
 apt install docker-ce docker-ce-cli containerd.io docker-compose -y
 
-echo -e "\e[92mJamStrapper: Done!"
+echo -e "\e[92mDeploy-Next: Done!"
 sleep 5
 
 
@@ -50,19 +50,19 @@ sleep 5
 
 
 
-echo -e "\e[92mJamStrapper: Configuring \e[1m\e[33mPermissions\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Configuring \e[1m\e[33mPermissions\e[92m\e[0m...\e[39m"
 usermod -aG docker $USER
 usermod -aG docker gitlab-runner
 
 
-echo -e "\e[92mJamStrapper: Configuring \e[1m\e[33mSystem Containers\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Configuring \e[1m\e[33mSystem Containers\e[92m\e[0m...\e[39m"
 cd /
 mkdir data
 echo '{"data-root":"/data"}' > /etc/docker/daemon.json
 docker network create nginx-proxy
 cd data
 
-echo -e "\e[92mJamStrapper: Writing \e[1m\e[33mNginx Template\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Writing \e[1m\e[33mNginx Template\e[92m\e[0m...\e[39m"
 cat <<EOF | tee nginx.tmpl
 {{ $CurrentContainer := where $ "ID" .Docker.CurrentContainerID | first }}
 
@@ -497,7 +497,7 @@ server {
 {{ end }}
 EOF
 
-echo -e "\e[92mJamStrapper: Writing \e[1m\e[33mCompose File\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Writing \e[1m\e[33mCompose File\e[92m\e[0m...\e[39m"
 cat <<EOF | tee ./docker-compose.yml
 version: "3"
 
@@ -576,7 +576,7 @@ services:
             - sys_docker_portainer:/data
 EOF
 
-echo -e "\e[92mJamStrapper: Starting \e[1m\e[33mSystem Containers\e[92m\e[0m...\e[39m"
+echo -e "\e[92mDeploy-Next: Starting \e[1m\e[33mSystem Containers\e[92m\e[0m...\e[39m"
 docker-compose up -d --build
 
 echo -e ""
@@ -607,7 +607,7 @@ echo -e "  5. \e[33mExecutor\e[39m: You have to specify \e[33mshell\e[39m"
 echo -e ""
 echo -e "\e[92m-> For more Information read the README.md"
 
-echo -e "\e[92mJamStrapper: Running \e[1m\e[33mRunner Register\e[92m\e[0m now..."
+echo -e "\e[92mDeploy-Next: Running \e[1m\e[33mRunner Register\e[92m\e[0m now..."
 echo -e "If you want to do this later you can abort the setup at this point with \e[33mCTRL+C\e[39m"
 gitlab-runner register
 

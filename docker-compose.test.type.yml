@@ -9,6 +9,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-    command: yarn run build
+    command: yarn next build
     networks:
       - test_type

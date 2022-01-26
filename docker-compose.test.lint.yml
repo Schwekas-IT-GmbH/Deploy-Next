@@ -9,6 +9,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-    command: yarn run lint
+    command: yarn next lint
     networks:
       - test_lint
