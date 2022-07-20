@@ -185,7 +185,7 @@ services:
             - "traefik.http.routers.duplicati.entrypoints=in_https,in_http"
             - "traefik.http.routers.duplicati.tls.certresolver=acme_cfdns"
             - "traefik.http.routers.duplicati.service=duplicati_srv"
-            - "traefik.http.services.duplicati_srv.loadbalancer.server.port=..."
+            - "traefik.http.services.duplicati_srv.loadbalancer.server.port=[CHANGE_ME]"
         restart: unless-stopped
         networks:
             - traefik
@@ -208,7 +208,7 @@ echo -e "\e[1mFurther Steps:\e[39m"
 echo -e ""
 echo -e "  1. Register the GitLab Runner on this Server by running \e[33m$ gitlab-runner register\e[39m"
 echo -e "  2. Go to \e[33mhttp://$( curl -s http://whatismyip.akamai.com/ ):42069\e[39m to setup initial user for Portainer"
-echo -e "  3. Open the docker-compose.yml in /data and replace all [REPLACEME] tags with your actual setup"
+echo -e "  3. Open the docker-compose.yml in /data and replace all [CHANGE_ME] tags with your actual setup"
 echo -e ""
 echo -e "\e[91Note#1: Please dont forget to setup Portainer, otherwise someone could setup their own Admin-Account and steal Data!\e[39m"
 echo -e "Note#2: If you want GitLab Runner to run simultaneous Tasks, run register again and update \e[33mconcurrent=X\e[39m in \e[33m/etc/gitlab-runner/config.toml\e[39m"
