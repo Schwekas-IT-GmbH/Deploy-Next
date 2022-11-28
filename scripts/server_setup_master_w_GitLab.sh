@@ -7,7 +7,7 @@ echo -e "\e[92mDeploy-Next: Running \e[1m\e[33mAPT UPGRADE\e[92m\e[0m...\e[39m"
 apt upgrade -y
 
 echo -e "\e[92mDeploy-Next: Installing \e[1m\e[33mUtilities\e[92m\e[0m...\e[39m"
-apt install apt-transport-https ca-certificates curl gnupg lsb-release -y
+apt install apt-transport-https ca-certificates curl gnupg lsb-release gnupg2 pass gpg -y
 sleep 5
 
 echo -e "\e[92mDeploy-Next: Adding \e[1m\e[33mGitLab Runner\e[92m\e[0m...\e[39m"
